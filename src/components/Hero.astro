@@ -1,0 +1,19 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section class="hero">
+  <div class="container">
+    <img src={profile.photo} alt={`${profile.name} 프로필 사진`} width="160" height="160" />
+    <div>
+      <h1>{profile.name}</h1>
+      <p class="tagline">{profile.tagline}</p>
+      <div class="meta">
+        <span>✉️ <a href={`mailto:${profile.email}`}>{profile.email}</a></span>
+        <span>📞 {profile.phone}</span>
+        <span>🎓 학점 {profile.gpa}</span>
+        <span>💻 <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></span>
+      </div>
+    </div>
+  </div>
+</section>

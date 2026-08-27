@@ -1,0 +1,23 @@
+---
+import { aboutMe } from '../data/profile';
+---
+
+<section id="about">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      {
+        aboutMe.map((block) => (
+          <div class="about-card">
+            <h3>{block.icon} {block.title}</h3>
+            <ul>
+              {block.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

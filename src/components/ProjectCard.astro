@@ -1,0 +1,42 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-card">
+  <header>
+    <h3>{project.title}</h3>
+    <span class="period">{project.period}</span>
+  </header>
+  <p class="role">{project.role}</p>
+
+  <ul class="stack">
+    {project.stack.map((tech) => <li>{tech}</li>)}
+  </ul>
+
+  <p class="summary">{project.summary}</p>
+
+  <ul class="highlights">
+    {project.highlights.map((h) => <li>{h}</li>)}
+  </ul>
+
+  <div class="project-images">
+    {
+      project.images.map((img) => (
+        <figure>
+          <img src={img.src} alt={img.alt} loading="lazy" />
+          <figcaption>{img.alt}</figcaption>
+        </figure>
+      ))
+    }
+  </div>
+
+  <a class="github-link" href={project.github} target="_blank" rel="noopener noreferrer">
+    GitHub →
+  </a>
+</article>

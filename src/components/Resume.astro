@@ -1,0 +1,33 @@
+---
+import { education, certifications, awards, languages } from '../data/profile';
+
+const blocks = [
+  { title: '🎓 학력', items: education },
+  { title: '📜 자격증', items: certifications },
+  { title: '🏆 수상', items: awards },
+  { title: '🗣 어학', items: languages },
+];
+---
+
+<section id="resume">
+  <div class="container">
+    <h2 class="section-title">Resume</h2>
+    <div class="resume-grid">
+      {
+        blocks.map((block) => (
+          <div class="resume-block">
+            <h3>{block.title}</h3>
+            <ul>
+              {block.items.map((item) => (
+                <li>
+                  <span class="period">{item.period}</span>
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

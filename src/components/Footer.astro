@@ -1,0 +1,14 @@
+---
+import { profile } from '../data/profile';
+---
+
+<footer class="contact" id="contact">
+  <div class="container">
+    <h2 class="section-title">Contact</h2>
+    <p>궁금한 점이 있으시면 편하게 연락 주세요.</p>
+    <div class="links">
+      <a href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </div>
+</footer>
