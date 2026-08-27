@@ -1,43 +1,24 @@
-# Chirpy Starter
+# hmy7788.github.io
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+[Astro](https://astro.build)로 만든 개인 포트폴리오. GitHub Pages(`https://hmy7788.github.io`)에 배포된다.
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+## 개발
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
-
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
-
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
+```bash
+npm install       # 의존성 설치 (최초 1회)
+npm run dev       # 로컬 개발 서버 (기본 http://localhost:4321)
+npm run build     # 프로덕션 빌드 → dist/
+npm run preview   # 빌드 결과물 로컬 미리보기
 ```
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+## 구조
 
-## Usage
+- `src/pages/index.astro` — 단일 페이지 포트폴리오 (Hero/About/Resume/Projects/Contact)
+- `src/components/` — 섹션별 컴포넌트
+- `src/data/profile.ts`, `src/data/projects.ts` — 프로필/프로젝트 콘텐츠. 내용 수정은 여기서
+- `public/images/` — 정적 이미지
+- `docs/` — 예전 정처기 블로그 글 백업 (빌드에 포함되지 않음, 비공개)
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+## 배포
 
-## Contributing
-
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
-
-## License
-
-This work is published under [MIT][mit] License.
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+`main`에 push되면 `.github/workflows/pages-deploy.yml`이 Astro로 빌드하고 GitHub Pages에 자동 배포한다.
