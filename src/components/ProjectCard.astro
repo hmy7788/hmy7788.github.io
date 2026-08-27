@@ -1,5 +1,6 @@
 ---
 import type { Project } from '../data/projects';
+import DataTable from './DataTable.astro';
 
 interface Props {
   project: Project;
@@ -21,22 +22,82 @@ const { project } = Astro.props;
 
   <p class="summary">{project.summary}</p>
 
-  <ul class="highlights">
-    {project.highlights.map((h) => <li>{h}</li>)}
-  </ul>
+  <details class="project-details">
+    <summary>자세히 보기</summary>
 
-  <div class="project-images">
+    <div class="detail-section">
+      <h4>개요</h4>
+      <ul>
+        {project.overview.map((o) => <li>{o}</li>)}
+      </ul>
+    </div>
+
+    {project.defectTypeTable && (
+      <div class="detail-section">
+        <h4>불량 타입</h4>
+        <DataTable table={project.defectTypeTable} />
+      </div>
+    )}
+
+    <div class="detail-section">
+      <h4>핵심 구현</h4>
+      <ul>
+        {project.keyImplementation.map((k) => <li>{k}</li>)}
+      </ul>
+    </div>
+
+    {project.resultsTable && (
+      <div class="detail-section">
+        <h4>실험 결과</h4>
+        <DataTable table={project.resultsTable} />
+      </div>
+    )}
+
+    {project.locationTable && (
+      <div class="detail-section">
+        <h4>결함 위치 추정 정확도 (AUPRO)</h4>
+        <DataTable table={project.locationTable} />
+      </div>
+    )}
+
     {
-      project.images.map((img) => (
-        <figure>
-          <img src={img.src} alt={img.alt} loading="lazy" />
-          <figcaption>{img.alt}</figcaption>
-        </figure>
-      ))
+      project.troubleshooting && (
+        <div class="troubleshooting">
+          <h4>🔧 트러블슈팅</h4>
+          <p><strong>문제</strong> {project.troubleshooting.problem}</p>
+          <p><strong>원인</strong></p>
+          <ul>
+            {project.troubleshooting.causes.map((c) => <li>{c}</li>)}
+          </ul>
+          <p><strong>해결</strong> {project.troubleshooting.solution}</p>
+        </div>
+      )
     }
-  </div>
 
-  <a class="github-link" href={project.github} target="_blank" rel="noopener noreferrer">
-    GitHub →
-  </a>
+    {
+      project.insights && (
+        <div class="insights">
+          <h4>💡 인사이트 및 한계</h4>
+          <ul>
+            {project.insights.map((i) => <li>{i}</li>)}
+          </ul>
+        </div>
+      )
+    }
+
+    <div class="project-images">
+      {
+        project.images.map((img) => (
+          <figure>
+            <img src={img.src} alt={img.alt} loading="lazy" />
+            <figcaption>{img.alt}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <a class="github-link" href={project.github} target="_blank" rel="noopener noreferrer">
+      GitHub →
+    </a>
+  </details>
 </article>

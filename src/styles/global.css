@@ -255,13 +255,122 @@ h2.section-title {
   margin: 0 0 1rem;
 }
 
-.project-card .highlights {
-  margin: 0 0 1.25rem;
+.project-details {
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.project-details summary {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent);
+  user-select: none;
+}
+
+.project-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-details summary::before {
+  content: '▸';
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.project-details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.project-details[open] summary {
+  margin-bottom: 1rem;
+}
+
+.detail-section {
+  margin-bottom: 1.25rem;
+}
+
+.detail-section h4 {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.detail-section ul {
+  margin: 0;
   padding-left: 1.2rem;
 }
 
-.project-card .highlights li + li {
+.detail-section ul li + li {
   margin-top: 0.4rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 0.5rem;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.table-wrap th,
+.table-wrap td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+}
+
+.table-wrap th {
+  background: var(--bg-alt);
+  font-weight: 600;
+}
+
+.table-wrap td {
+  white-space: normal;
+}
+
+.table-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0.4rem 0 0;
+}
+
+.troubleshooting,
+.insights {
+  background: var(--bg-alt);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.92rem;
+}
+
+.troubleshooting h4,
+.insights h4 {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.troubleshooting p {
+  margin: 0.3rem 0;
+}
+
+.troubleshooting ul,
+.insights ul {
+  margin: 0.3rem 0 0.6rem;
+  padding-left: 1.2rem;
+  color: var(--text-muted);
+}
+
+.troubleshooting ul li + li,
+.insights ul li + li {
+  margin-top: 0.3rem;
 }
 
 .project-images {

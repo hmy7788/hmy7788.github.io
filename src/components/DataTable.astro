@@ -1,0 +1,29 @@
+---
+import type { DataTable } from '../data/projects';
+
+interface Props {
+  table: DataTable;
+}
+
+const { table } = Astro.props;
+---
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        {table.headers.map((h) => <th>{h}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        table.rows.map((row) => (
+          <tr>
+            {row.map((cell) => <td>{cell}</td>)}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {table.note && <p class="table-note">{table.note}</p>}
+</div>
