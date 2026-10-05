@@ -15,6 +15,37 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script is:inline>
+      // 예전 Jekyll(Chirpy) 블로그가 등록한 서비스 워커·캐시를 제거한다.
+      (function () {
+        if (!('serviceWorker' in navigator)) return;
+        var wasControlled = !!navigator.serviceWorker.controller;
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (regs) {
+            return Promise.all(regs.map(function (r) { return r.unregister(); }));
+          })
+          .then(function (results) {
+            var removed = results.some(Boolean);
+            if (!('caches' in window)) return removed;
+            return caches.keys().then(function (keys) {
+              return Promise.all(keys.map(function (k) { return caches.delete(k); }))
+                .then(function () { return removed || keys.length > 0; });
+            });
+          })
+          .then(function (cleaned) {
+            // 옛 서비스 워커가 이 페이지를 제어 중이었다면 한 번만 새로고침해 최신 화면을 불러온다.
+            if (cleaned && wasControlled && !sessionStorage.getItem('sw-cleaned')) {
+              sessionStorage.setItem('sw-cleaned', '1');
+              location.reload();
+            }
+          })
+          .catch(function () {});
+      })();
+    </script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
