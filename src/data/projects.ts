@@ -21,9 +21,11 @@ export type Project = {
   keyImplementation: string[];
   resultsTable?: DataTable;
   locationTable?: DataTable;
+  extraTables?: { title: string; table: DataTable }[];
   troubleshooting?: Troubleshooting;
   insights?: string[];
   github: string;
+  demo?: string;
   images: { src: string; alt: string }[];
 };
 
@@ -129,6 +131,70 @@ export const projects: Project[] = [
     images: [
       { src: '/images/project2-heatmap.png', alt: '결함 위치 히트맵 및 불량 판단 Threshold' },
       { src: '/images/project2-mes.jpg', alt: '미니 MES 관제 시스템 화면' },
+    ],
+  },
+  {
+    title: '비전 기반 작업자 오조립 방지 & 공정 검증 시스템 (AEGIS)',
+    period: '2026.09.21 – 09.29',
+    role: '팀(4인) · 현대오토에버 모빌리티 SW스쿨 4기 프로젝트',
+    stack: ['Python', 'PyTorch', 'OpenCV', 'RT-DETR', 'YOLO-OBB', 'SQLite', 'MQTT'],
+    summary:
+      '다품종 조립 공정의 오조립을 카메라로 조립 중에 감지해 틀린 자리와 원인을 작업자 화면에 바로 표시하는 시스템입니다. 룰베이스의 한계를 수치로 확인한 뒤 딥러닝 검출 모델 3종을 같은 조건에서 비교했고, 룰베이스 검증과 RT-DETR 학습을 담당했습니다.',
+    overview: [
+      '다품종 조립 공정에서 부품·위치·방향 오조립을 카메라로 조립 중에 감지해 틀린 자리와 원인을 작업자 화면에 바로 표시. MES에서 작업지시를 받고 제품별 판정 결과를 MES로 보고',
+      '담당: 룰베이스 검증, RT-DETR 학습, 조립 과정 평가 로직 고도화 (판정 코어, 웹 UI, MES 연동은 팀원 담당)',
+      '교육 프로그램 내 팀 프로젝트로, 실습용 부품(나무 막대·볼트)과 고정 카메라·검은 배경 환경에서 구현·검증',
+    ],
+    keyImplementation: [
+      '룰베이스 형태 검증: 컨투어로 막대 외곽선과 빈 구멍을 분리하고, 구멍 직선 피팅으로 회전 보정 후 막대별 구멍 개수 시그니처(예: [2,1])와 구멍 번호·볼트 색을 레시피와 대조해 Model A/B/C 판정. 틀리면 원인 텍스트 생성',
+      '볼트가 꽂힌 완성품은 구멍이 하나의 덩어리로 합쳐져 Mother의 구멍을 직접 셀 수 없어, 세로 막대별 "접합점 위쪽 빈 구멍" 개수 기준으로 전환',
+      'RT-DETR-L 학습: 단일 부품 → 조립체 → 픽킹·조립 진행 프레임 순으로 3차에 걸쳐 데이터를 980장까지 확장, YOLO11n-OBB·YOLO26n-OBB와 같은 test 149장으로 비교',
+      '검출 모델 교체 구조(--model-type): 판정 로직을 모델·UI와 분리해 모델만 바꿔 같은 영상으로 공정 평가',
+      '판정 상태 PASS / NG / HOLD / IN_PROGRESS, 같은 판정이 400ms 이상 유지될 때만 확정해 깜빡임 방지',
+    ],
+    resultsTable: {
+      headers: ['모델', 'mAP50-95', '오류 사건 검출', '비고'],
+      rows: [
+        ['RT-DETR-L', '0.830', '7/7', '표시 상태 일치율 57.8%로 최고, CPU 2.3 FPS라 GPU 필요'],
+        ['YOLO11n-OBB', '0.844', '6/7', 'H4→H5 위치 오류 1건 미검출'],
+        ['YOLO26n-OBB', '0.877', '7/7', 'mAP 최고, 오경보 에피소드 4건으로 최저'],
+      ],
+      note: 'test 149장 기준, 오류 사건은 3분 47초 영상 7건 기준. RT-DETR은 일반 박스(AABB), YOLO 두 모델은 회전 박스(OBB)로 채점해 mAP는 참고용 비교',
+    },
+    extraTables: [
+      {
+        title: '룰베이스 정확도 (test 149장)',
+        table: {
+          headers: ['구분', '정답/전체', '비고'],
+          rows: [
+            ['완성품', '14/15 (93.3%)', '다른 모델로 오판 0건, 틀려도 보류로만 실패'],
+            ['단일 부품', '84/84 (100%)', ''],
+            ['피킹 영상', '23/50 (46%)', '손에 가려진 부품에 약함 → 딥러닝 검출 도입 근거'],
+          ],
+          note: '전체 정확도: 81.2%',
+        },
+      },
+    ],
+    troubleshooting: {
+      problem:
+        'RT-DETR이 2구멍 막대와 3구멍 막대를 같은 박스에 두 클래스로 동시 검출(conf 0.81 / 0.59). val mAP50은 0.99로 높아 지표만으로는 발견할 수 없었고, 샘플 직접 추론으로 확인',
+      causes: ['구멍 개수만 다른 두 부품을 단일 부품 사진만으로는 구분 학습이 부족했던 것으로 추정'],
+      solution:
+        '완성 조립체 사진 100장을 추가 학습 → 2구·3구 모두 단일 정답만 검출(conf 0.97 / 0.98), 조립체의 부품 개수까지 정확히 검출',
+    },
+    insights: [
+      '룰베이스의 한계를 수치로 확인한 뒤 딥러닝 3종을 동일 조건에서 비교해 선택하는 흐름을 체득',
+      'val 지표가 높아도 실제 추론에서 클래스 혼동이 남을 수 있어, 직접 추론 확인이 필요함을 확인',
+      '정상 완성품을 NG로 판정하는 오경보가 60초 중 19~23초 발생(세 모델 공통), 미완성품 PASS 오판은 0초 → 모델 교체보다 부품 연결·기하 판정 안정화가 우선 과제',
+      '처리 속도는 오프라인 측정값(YOLO11만 GPU)이고 카메라→경고 지연은 미측정, 영상 1개·오류 사건 7건 기준의 시스템 수준 평가',
+      'RT-DETR은 10 epoch만 학습해 추가 학습 효과는 미확인, 실습 환경 결과라 실제 현장 적용에는 재검증 필요',
+    ],
+    github: 'https://github.com/hmy7788/aegis-vision',
+    demo: 'https://www.youtube.com/watch?v=MuZ7LdKFj_c',
+    images: [
+      { src: '/images/project3-ui-ng.jpg', alt: 'NG 판정 시 작업자 화면 (잘못 끼운 자리와 원인 표시)' },
+      { src: '/images/project3-rulebased.png', alt: '룰베이스 검출 결과 (컨투어 · 구멍 개수 시그니처)' },
+      { src: '/images/project3-models.png', alt: '검출 모델 3종 성능 비교' },
     ],
   },
 ];

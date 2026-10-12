@@ -403,6 +403,10 @@ h2.section-title {
   font-size: 0.95rem;
 }
 
+.project-card .github-link + .github-link {
+  margin-left: 1rem;
+}
+
 /* Footer */
 footer.contact {
   text-align: center;

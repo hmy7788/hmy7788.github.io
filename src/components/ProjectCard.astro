@@ -61,6 +61,15 @@ const { project } = Astro.props;
     )}
 
     {
+      project.extraTables?.map((extra) => (
+        <div class="detail-section">
+          <h4>{extra.title}</h4>
+          <DataTable table={extra.table} />
+        </div>
+      ))
+    }
+
+    {
       project.troubleshooting && (
         <div class="troubleshooting">
           <h4>🔧 트러블슈팅</h4>
@@ -99,5 +108,12 @@ const { project } = Astro.props;
     <a class="github-link" href={project.github} target="_blank" rel="noopener noreferrer">
       GitHub →
     </a>
+    {
+      project.demo && (
+        <a class="github-link" href={project.demo} target="_blank" rel="noopener noreferrer">
+          시연 영상 →
+        </a>
+      )
+    }
   </details>
 </article>
