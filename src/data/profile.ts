@@ -15,6 +15,7 @@ export const education = [
 
 export const certifications = [
   { period: '2026.08', name: 'ADsP (데이터분석 준전문가 자격증) 취득' },
+  { period: '2026.09', name: '정보처리기사 취득' },
 ];
 
 export const awards = [
