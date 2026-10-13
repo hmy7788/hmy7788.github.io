@@ -98,16 +98,22 @@ const { project } = Astro.props;
       {
         project.images.map((img) => (
           <figure>
-            <img src={img.src} alt={img.alt} loading="lazy" />
+            <a href={img.src} target="_blank" rel="noopener noreferrer" title="원본 크기로 보기">
+              <img src={img.src} alt={img.alt} loading="lazy" />
+            </a>
             <figcaption>{img.alt}</figcaption>
           </figure>
         ))
       }
     </div>
 
-    <a class="github-link" href={project.github} target="_blank" rel="noopener noreferrer">
-      GitHub →
-    </a>
+    {
+      project.github && (
+        <a class="github-link" href={project.github} target="_blank" rel="noopener noreferrer">
+          GitHub →
+        </a>
+      )
+    }
     {
       project.demo && (
         <a class="github-link" href={project.demo} target="_blank" rel="noopener noreferrer">
