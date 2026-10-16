@@ -136,7 +136,7 @@ export const projects: Project[] = [
   },
   {
     title: '에어컨 다품종 대량 주문 대응 셀 생산라인 설계 (CPS)',
-    period: '2026.08',
+    period: '2026.08.04',
     role: '팀(5인) · 현대오토에버 모빌리티 SW스쿨 4기 교육 프로젝트',
     stack: ['S-Prodis', '3D 시뮬레이션', '라인 밸런싱', 'UPH · UPPH · UPMH 분석', '경제성 분석'],
     summary:
