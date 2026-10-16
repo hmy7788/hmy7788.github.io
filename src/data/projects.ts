@@ -26,6 +26,7 @@ export type Project = {
   insights?: string[];
   github?: string;
   demo?: string;
+  pdf?: string;
   images: { src: string; alt: string }[];
 };
 
@@ -204,6 +205,7 @@ export const projects: Project[] = [
       { src: '/images/cps-08-summary.jpg', alt: '종합 지표 비교 (AS-IS · TO-BE-A · TO-BE-B)' },
       { src: '/images/cps-09-profit.jpg', alt: '연간 누적 수익 비교 (10년, 억원)' },
     ],
+    pdf: '/files/cps-presentation.pdf',
   },
   {
     title: '설비 진동 신호 처리 기반 회전기기 결함 진단 (PHM)',
@@ -258,6 +260,7 @@ export const projects: Project[] = [
       { src: '/images/phm-07-lubrication.jpg', alt: '실습 4 · 윤활유 제거 전후 FFT 비교: 고주파 대역으로 에너지 이동' },
       { src: '/images/phm-08-pinion.jpg', alt: '실습 4 · 3번 모터 시간 파형: 34~35ms 간격 충격 반복 → 피니언 손상' },
     ],
+    pdf: '/files/phm-presentation.pdf',
   },
   {
     title: '비전 기반 작업자 오조립 방지 & 공정 검증 시스템 (AEGIS)',

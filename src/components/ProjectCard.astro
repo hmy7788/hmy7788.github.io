@@ -115,6 +115,13 @@ const { project } = Astro.props;
       )
     }
     {
+      project.pdf && (
+        <a class="github-link" href={project.pdf} target="_blank" rel="noopener noreferrer">
+          발표 자료 보기 →
+        </a>
+      )
+    }
+    {
       project.demo && (
         <a class="github-link" href={project.demo} target="_blank" rel="noopener noreferrer">
           시연 영상 →
