@@ -325,5 +325,6 @@ export const projects: Project[] = [
       { src: '/images/project3-rulebased.png', alt: '룰베이스 검출 결과 (컨투어 · 구멍 개수 시그니처)' },
       { src: '/images/project3-models.png', alt: '검출 모델 3종 성능 비교' },
     ],
+    pdf: '/files/aegis-presentation.pdf',
   },
 ];
